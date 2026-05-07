@@ -1,4 +1,4 @@
-import { Users, HeartHandshake, BadgeCheck, Music } from "lucide-react";
+import { Users, HeartHandshake, BadgeCheck, Music, Droplets, Wrench, ShieldCheck } from "lucide-react";
 
 export const timeline = [
   { time: "08:00", emoji: "🌅", text: "おはようの挨拶をしました", border: "#fbbf24" },
@@ -113,6 +113,72 @@ export const careProposals = [
     tagColor: "bg-amber-50 text-amber-600",
     priority: "提案",
     priorityColor: "bg-slate-100 text-slate-600",
+  },
+];
+
+export const conversationLog = [
+  {
+    id: "c1",
+    date: "5月3日",
+    text: "お風呂上がりに壁がビショビショになっちゃって、なかなか乾かないのよね",
+    triggerIds: ["r1"],
+  },
+  {
+    id: "c2",
+    date: "5月5日",
+    text: "廊下を歩くときちょっとふらつく気がしてねえ…",
+    triggerIds: ["r2"],
+  },
+  {
+    id: "c3",
+    date: "5月1日",
+    text: "冬はこの部屋、底冷えがひどくてねえ。足の指が痛くなるくらい寒い",
+    triggerIds: ["r3"],
+  },
+];
+
+export const reformProposals = [
+  {
+    id: "r1",
+    Icon: Droplets,
+    iconBg: "bg-sky-100",
+    iconColor: "text-sky-600",
+    title: "お風呂の換気・乾燥",
+    shortReason: "ポチがお風呂場のことを心配しています",
+    conversationQuote: "お風呂上がりに壁がビショビショになっちゃって、なかなか乾かないのよね",
+    conversationDate: "5月3日",
+    body: "湿気がこもりやすい浴室は、カビや転倒のリスクが高まります。換気乾燥機の取り付けで、お風呂上がりを快適に。",
+    accentColor: "#0284c7",
+    cardBg: "linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%)",
+    cardBorder: "rgba(56,189,248,.3)",
+  },
+  {
+    id: "r2",
+    Icon: Wrench,
+    iconBg: "bg-indigo-100",
+    iconColor: "text-indigo-600",
+    title: "廊下・浴室の手すり",
+    shortReason: "ポチが歩くときのことを気にしています",
+    conversationQuote: "廊下を歩くときちょっとふらつく気がしてねえ…",
+    conversationDate: "5月5日",
+    body: "ふらつきが気になりはじめたころが、手すり設置の好機です。廊下・浴室・トイレの3か所に設けると安心感が大きく変わります。",
+    accentColor: "#4f46e5",
+    cardBg: "linear-gradient(135deg,#eef2ff 0%,#e0e7ff 100%)",
+    cardBorder: "rgba(129,140,248,.3)",
+  },
+  {
+    id: "r3",
+    Icon: ShieldCheck,
+    iconBg: "bg-amber-100",
+    iconColor: "text-amber-600",
+    title: "断熱リフォーム",
+    shortReason: "ポチが冬の寒さを心配しています",
+    conversationQuote: "冬はこの部屋、底冷えがひどくてねえ。足の指が痛くなるくらい寒い",
+    conversationDate: "5月1日",
+    body: "底冷えは血圧変動や転倒リスクにつながります。窓・床・壁への断熱材施工で、冬でも体に優しい室温をキープできます。",
+    accentColor: "#d97706",
+    cardBg: "linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%)",
+    cardBorder: "rgba(251,191,36,.3)",
   },
 ];
 
