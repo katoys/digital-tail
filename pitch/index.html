@@ -1,810 +1,1387 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>モフ — アイデアソン プレゼン資料</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><ellipse cx='16' cy='22' rx='8' ry='6' fill='%23f07d3a'/><ellipse cx='7' cy='14' rx='3.5' ry='3' fill='%23f07d3a'/><ellipse cx='13' cy='11' rx='3.5' ry='3' fill='%23f07d3a'/><ellipse cx='19' cy='11' rx='3.5' ry='3' fill='%23f07d3a'/><ellipse cx='25' cy='14' rx='3.5' ry='3' fill='%23f07d3a'/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Shippori+Mincho:wght@400;700;800&display=swap" rel="stylesheet">
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; background: #0f0f0f; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モフ / Mofu — SMS Ideathon 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Shippori+Mincho:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-  font-family: 'Zen Maru Gothic', sans-serif;
-  color: #1a1a2e;
-}
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #111;
+        }
 
-/* ── SLIDE CONTAINER ── */
-.slides-wrap {
-  width: 100vw; height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-}
-.slide {
-  /* サイズはJSで動的に設定 */
-  position: relative;
-  display: none;
-  overflow: hidden;
-  border-radius: 0;
-  flex-shrink: 0;
-}
-.slide.active { display: flex; }
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            color: #1a1a2e;
+        }
 
-/* ── NAV ── */
-.nav {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(0,0,0,0.7); backdrop-filter: blur(12px);
-  padding: 10px 20px; border-radius: 50px;
-  border: 1px solid rgba(255,255,255,0.1);
-  z-index: 1000;
-}
-.nav button {
-  background: rgba(255,255,255,0.15); border: none; color: white;
-  width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
-  font-size: 16px; transition: background 0.2s;
-  display: flex; align-items: center; justify-content: center;
-}
-.nav button:hover { background: rgba(255,255,255,0.3); }
-.nav-counter { color: rgba(255,255,255,0.7); font-size: 13px; min-width: 60px; text-align: center; }
-.nav-dots { display: flex; gap: 6px; }
-.nav-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: rgba(255,255,255,0.25); cursor: pointer; transition: all 0.2s;
-  border: none;
-}
-.nav-dot.active { background: #f07d3a; transform: scale(1.3); }
+        .slides-wrap {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* script toggle */
-.script-toggle {
-  position: fixed; top: 16px; right: 16px; z-index: 1000;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white; padding: 8px 16px; border-radius: 50px;
-  font-size: 12px; cursor: pointer; font-family: 'Zen Maru Gothic', sans-serif;
-  transition: background 0.2s;
-}
-.script-toggle:hover { background: rgba(0,0,0,0.85); }
-.script-panel {
-  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-  width: min(900px, 95vw);
-  background: rgba(0,0,0,0.88); backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px; padding: 20px 24px;
-  display: none; z-index: 999;
-}
-.script-panel.open { display: block; }
-.script-panel p { color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.85; }
-.script-panel .time { color: #f07d3a; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+        .slide {
+            position: relative;
+            display: none;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 1 — TITLE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s1 {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%);
-  align-items: center; justify-content: center; flex-direction: column;
-}
-.s1-bg {
-  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-}
-.s1-circle {
-  position: absolute; border-radius: 50%;
-  background: radial-gradient(circle, rgba(240,125,58,0.12) 0%, transparent 70%);
-}
-.s1-c1 { width: 600px; height: 600px; top: -200px; right: -100px; }
-.s1-c2 { width: 400px; height: 400px; bottom: -150px; left: -80px; background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%); }
+        .slide.active {
+            display: flex;
+        }
 
-.s1-tag {
-  font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-  color: rgba(240,125,58,0.9); margin-bottom: 20px;
-  border: 1px solid rgba(240,125,58,0.3); padding: 6px 18px; border-radius: 50px;
-  background: rgba(240,125,58,0.08);
-}
-.s1-emoji { font-size: 80px; margin-bottom: 16px; animation: float 4s ease-in-out infinite; }
-.s1-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 72px; font-weight: 800;
-  color: white; text-align: center; line-height: 1.1;
-  margin-bottom: 12px;
-}
-.s1-title span { color: #f07d3a; }
-.s1-sub {
-  font-size: 20px; color: rgba(255,255,255,0.55); text-align: center;
-  letter-spacing: 0.5px;
-}
-.s1-badge {
-  margin-top: 40px;
-  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 50px; padding: 10px 28px;
-  font-size: 14px; color: rgba(255,255,255,0.6);
-}
+        /* NAV */
+        .nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, .75);
+            backdrop-filter: blur(12px);
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            z-index: 1000;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 2 — PROBLEM
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s2 {
-  background: #fdf8f2;
-  align-items: center; justify-content: center;
-  flex-direction: column; padding: 60px 80px;
-}
-.slide-label {
-  position: absolute; top: 36px; left: 48px;
-  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-  color: #f07d3a; opacity: 0.8;
-}
-.s2-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 44px; font-weight: 700; text-align: center;
-  color: #1a1a2e; margin-bottom: 48px; line-height: 1.3;
-}
-.s2-title em { font-style: normal; color: #f07d3a; }
-.problem-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;
-}
-.problem-card {
-  background: white; border-radius: 20px; padding: 28px 24px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-  border-left: 4px solid;
-  position: relative; overflow: hidden;
-}
-.problem-card::after {
-  content: attr(data-num);
-  position: absolute; bottom: -8px; right: 12px;
-  font-size: 72px; font-weight: 800; opacity: 0.06;
-  font-family: 'Shippori Mincho', serif; line-height: 1;
-}
-.pc-blue  { border-color: #6366f1; }
-.pc-orange { border-color: #f07d3a; }
-.pc-green { border-color: #6aaa7c; }
-.problem-card .who {
-  font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.pc-blue .who  { color: #6366f1; }
-.pc-orange .who { color: #f07d3a; }
-.pc-green .who  { color: #6aaa7c; }
-.problem-card .pain { font-size: 22px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; line-height: 1.3; }
-.problem-card .detail { font-size: 13px; color: #718096; line-height: 1.6; }
-.problem-card .emoji { font-size: 32px; margin-bottom: 12px; display: block; }
+        .nav button {
+            background: rgba(255, 255, 255, .15);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 3 — SOLUTION OVERVIEW
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s3 {
-  background: linear-gradient(160deg, #fff9f2 0%, #fef3e4 100%);
-  align-items: center; justify-content: center;
-  padding: 50px 70px;
-}
-.s3-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
-.s3-left {}
-.s3-tag { font-size: 12px; font-weight: 700; color: #f07d3a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-.s3-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 40px; font-weight: 700; color: #1a1a2e;
-  line-height: 1.3; margin-bottom: 20px;
-}
-.s3-title em { font-style: normal; color: #f07d3a; }
-.s3-desc { font-size: 15px; color: #4a5568; line-height: 1.8; }
+        .nav button:hover {
+            background: rgba(255, 255, 255, .3);
+        }
 
-.s3-right { display: flex; flex-direction: column; gap: 14px; }
-.s3-card {
-  background: white; border-radius: 18px; padding: 20px 22px;
-  display: flex; align-items: center; gap: 16px;
-  box-shadow: 0 3px 16px rgba(0,0,0,0.07);
-  border: 1.5px solid;
-}
-.s3c-orange { border-color: rgba(240,125,58,0.25); }
-.s3c-indigo { border-color: rgba(99,102,241,0.25); }
-.s3c-green  { border-color: rgba(106,170,124,0.25); }
-.s3-card-icon {
-  width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 24px;
-}
-.sci-o { background: linear-gradient(135deg,#fff0e0,#ffd8b0); }
-.sci-i { background: linear-gradient(135deg,#eef0ff,#dde0ff); }
-.sci-g { background: linear-gradient(135deg,#edf7f1,#d5eedd); }
-.s3-card-text h3 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px; }
-.s3-card-text p  { font-size: 12px; color: #718096; }
-.s3-card-who { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 50px; white-space: nowrap; }
-.sw-o { background: #fff0e0; color: #f07d3a; }
-.sw-i { background: #eef0ff; color: #6366f1; }
-.sw-g { background: #edf7f1; color: #6aaa7c; }
+        .nav-counter {
+            color: rgba(255, 255, 255, .6);
+            font-size: 12px;
+            min-width: 52px;
+            text-align: center;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 4 — DEMO GUIDE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s4 {
-  background: #f8faff;
-  align-items: center; justify-content: center;
-  padding: 50px 70px; flex-direction: column;
-}
-.s4-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 36px; font-weight: 700; color: #1a1a2e;
-  margin-bottom: 36px; text-align: center;
-}
-.s4-title span { color: #6366f1; }
-.demo-flow {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%;
-}
-.demo-step {
-  background: white; border-radius: 18px; padding: 22px 18px;
-  box-shadow: 0 3px 16px rgba(0,0,0,0.07);
-  position: relative; text-align: center;
-}
-.demo-step::after {
-  content: '→';
-  position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
-  font-size: 18px; color: #cbd5e1; z-index: 1;
-}
-.demo-step:last-child::after { display: none; }
-.ds-num {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white; font-size: 14px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 12px;
-}
-.ds-emoji { font-size: 36px; display: block; margin-bottom: 10px; }
-.ds-title { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
-.ds-detail { font-size: 11px; color: #718096; line-height: 1.5; }
-.ds-time {
-  display: inline-block; background: #f0f4ff; color: #6366f1;
-  font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 50px;
-  margin-top: 8px;
-}
+        .nav-dots {
+            display: flex;
+            gap: 5px;
+        }
 
-.demo-note {
-  margin-top: 24px; background: linear-gradient(135deg,#fff8f0,#ffeedd);
-  border-radius: 14px; padding: 14px 24px;
-  font-size: 13px; color: #92400e;
-  border: 1px solid rgba(240,125,58,0.2);
-  display: flex; align-items: center; gap: 10px;
-}
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .25);
+            cursor: pointer;
+            border: none;
+            transition: all .2s;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 5 — WHY SMS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s5 {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1a1040 100%);
-  align-items: center; justify-content: center;
-  padding: 50px 70px;
-}
-.s5-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
-.s5-left {}
-.s5-tag { font-size: 12px; font-weight: 700; color: #a78bfa; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-.s5-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 38px; font-weight: 700; color: white;
-  line-height: 1.3; margin-bottom: 20px;
-}
-.s5-title em { font-style: normal; color: #f07d3a; }
-.s5-desc { font-size: 14px; color: #94a3b8; line-height: 1.8; }
+        .dot.active {
+            background: #f07d3a;
+            transform: scale(1.35);
+        }
 
-.s5-right { display: flex; flex-direction: column; gap: 14px; }
-.asset-card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px; padding: 18px 20px;
-  display: flex; gap: 14px; align-items: flex-start;
-  backdrop-filter: blur(8px);
-}
-.asset-icon {
-  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 20px;
-}
-.ai-v { background: rgba(167,139,250,0.2); }
-.ai-o { background: rgba(240,125,58,0.2); }
-.ai-g { background: rgba(52,211,153,0.2); }
-.ai-b { background: rgba(96,165,250,0.2); }
-.asset-card h3 { font-size: 14px; font-weight: 700; color: white; margin-bottom: 4px; }
-.asset-card p  { font-size: 12px; color: #64748b; line-height: 1.5; }
-.asset-arrow {
-  margin-left: auto; flex-shrink: 0;
-  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 50px;
-  background: rgba(240,125,58,0.2); color: #fb923c;
-  align-self: center; white-space: nowrap;
-}
+        /* SCRIPT */
+        .script-btn {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, .2);
+            color: white;
+            padding: 7px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            cursor: pointer;
+            font-family: 'Zen Maru Gothic', sans-serif;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 6 — REVENUE MODEL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s6 {
-  background: #fdf8f2;
-  align-items: center; justify-content: center;
-  padding: 50px 70px; flex-direction: column;
-}
-.s6-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 36px; font-weight: 700; color: #1a1a2e;
-  margin-bottom: 36px; text-align: center;
-}
-.s6-title span { color: #f07d3a; }
-.revenue-flow {
-  display: flex; align-items: center; gap: 0; width: 100%;
-}
-.rev-box {
-  flex: 1; text-align: center; padding: 24px 16px;
-  background: white; border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-  position: relative;
-}
-.rev-arrow {
-  flex-shrink: 0; width: 40px; text-align: center;
-  font-size: 22px; color: #f07d3a;
-}
-.rev-box .rb-emoji { font-size: 36px; display: block; margin-bottom: 10px; }
-.rev-box .rb-title { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
-.rev-box .rb-detail { font-size: 11px; color: #718096; line-height: 1.5; }
-.rev-box .rb-badge {
-  display: inline-block; margin-top: 10px;
-  font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 50px;
-}
-.rbb-orange { background: #fff0e0; color: #f07d3a; }
-.rbb-blue   { background: #eef0ff; color: #6366f1; }
-.rbb-green  { background: #edf7f1; color: #6aaa7c; }
-.rbb-amber  { background: #fffbeb; color: #d97706; }
+        .script-panel {
+            position: fixed;
+            bottom: 72px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(860px, 95vw);
+            background: rgba(0, 0, 0, .9);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: none;
+            z-index: 999;
+            max-height: 200px;
+            overflow-y: auto;
+        }
 
-.s6-note {
-  margin-top: 28px; width: 100%;
-  background: linear-gradient(135deg,#1e293b,#0f172a);
-  border-radius: 16px; padding: 18px 28px;
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
-}
-.s6-note-item { text-align: center; }
-.s6-note-item .sni-val { font-size: 28px; font-weight: 800; color: #f07d3a; font-family: 'Shippori Mincho', serif; }
-.s6-note-item .sni-label { font-size: 11px; color: #64748b; margin-top: 4px; }
+        .script-panel.open {
+            display: block;
+        }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SLIDE 7 — CLOSING
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.s7 {
-  background: linear-gradient(135deg, #f07d3a 0%, #e86025 40%, #d45520 100%);
-  align-items: center; justify-content: center;
-  flex-direction: column;
-}
-.s7-bg {
-  position: absolute; font-size: 280px; opacity: 0.07;
-  pointer-events: none; user-select: none;
-}
-.s7-bg1 { top: -60px; right: -40px; transform: rotate(20deg); }
-.s7-bg2 { bottom: -60px; left: -60px; transform: rotate(-15deg); font-size: 200px; }
-.s7-tag { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
-.s7-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 64px; font-weight: 800; color: white;
-  text-align: center; line-height: 1.2; margin-bottom: 20px;
-}
-.s7-sub { font-size: 20px; color: rgba(255,255,255,0.75); text-align: center; line-height: 1.7; }
-.s7-points {
-  display: flex; gap: 20px; margin-top: 36px;
-}
-.s7-point {
-  background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 14px; padding: 14px 22px; text-align: center;
-}
-.s7-point .sp-emoji { font-size: 24px; display: block; margin-bottom: 6px; }
-.s7-point .sp-text  { font-size: 13px; color: rgba(255,255,255,0.9); font-weight: 600; }
+        .script-panel .st {
+            color: #f07d3a;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
 
-/* ── ANIMATIONS ── */
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
-}
-</style>
+        .script-panel .sb {
+            color: rgba(255, 255, 255, .82);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .slide-label {
+            position: absolute;
+            top: 32px;
+            left: 44px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: .7;
+        }
+
+        /* ━━━ S1 TITLE ━━━ */
+        .s1 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #1e293b 100%);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .s1 .bg-c {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .s1 .c1 {
+            width: 560px;
+            height: 560px;
+            top: -180px;
+            right: -80px;
+            background: radial-gradient(circle, rgba(240, 125, 58, .13) 0%, transparent 70%);
+        }
+
+        .s1 .c2 {
+            width: 380px;
+            height: 380px;
+            bottom: -120px;
+            left: -60px;
+            background: radial-gradient(circle, rgba(99, 102, 241, .1) 0%, transparent 70%);
+        }
+
+        .s1-tag {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(240, 125, 58, .9);
+            border: 1px solid rgba(240, 125, 58, .3);
+            padding: 5px 16px;
+            border-radius: 50px;
+            background: rgba(240, 125, 58, .08);
+            margin-bottom: 18px;
+        }
+
+        .s1-emoji {
+            font-size: 72px;
+            margin-bottom: 14px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .s1-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 68px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .s1-title span {
+            color: #f07d3a;
+        }
+
+        .s1-sub {
+            font-size: 18px;
+            color: rgba(255, 255, 255, .5);
+            text-align: center;
+        }
+
+        .s1-badge {
+            margin-top: 36px;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 50px;
+            padding: 8px 24px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, .55);
+        }
+
+        /* ━━━ S2 PROBLEM ━━━ */
+        .s2 {
+            background: #fdf8f2;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 52px 60px 40px;
+        }
+
+        .s2 .slide-label {
+            color: #f07d3a;
+        }
+
+        .s2-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 38px;
+            font-weight: 700;
+            text-align: center;
+            color: #1a1a2e;
+            margin-bottom: 36px;
+            line-height: 1.3;
+        }
+
+        .s2-title em {
+            font-style: normal;
+            color: #f07d3a;
+        }
+
+        .prob-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .prob-card {
+            background: white;
+            border-radius: 20px;
+            padding: 26px 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .07);
+            border-left: 4px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prob-card::after {
+            content: attr(data-n);
+            position: absolute;
+            bottom: -6px;
+            right: 10px;
+            font-size: 64px;
+            font-weight: 800;
+            opacity: .05;
+            font-family: 'Shippori Mincho', serif;
+            line-height: 1;
+        }
+
+        .pc1 {
+            border-color: #6366f1;
+        }
+
+        .pc2 {
+            border-color: #f07d3a;
+        }
+
+        .pc3 {
+            border-color: #6aaa7c;
+        }
+
+        .prob-card .who {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .pc1 .who {
+            color: #6366f1;
+        }
+
+        .pc2 .who {
+            color: #f07d3a;
+        }
+
+        .pc3 .who {
+            color: #6aaa7c;
+        }
+
+        .prob-card .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .prob-card .pain {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .prob-card .detail {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.65;
+        }
+
+        /* ━━━ S3 SOLUTION ━━━ */
+        .s3 {
+            background: linear-gradient(160deg, #fff9f2 0%, #fef3e4 100%);
+            align-items: center;
+            padding: 52px 60px;
+        }
+
+        .s3 .slide-label {
+            color: #f07d3a;
+        }
+
+        .s3-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 52px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .s3-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #f07d3a;
+            margin-bottom: 12px;
+        }
+
+        .s3-h {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 34px;
+            color: #1a1a2e;
+            line-height: 1.25;
+            margin-bottom: 14px;
+        }
+
+        .s3-h em {
+            font-style: normal;
+            color: #f07d3a;
+        }
+
+        .s3-desc {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.85;
+        }
+
+        .s3-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .s3c {
+            background: white;
+            border-radius: 16px;
+            padding: 17px 19px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, .06);
+            border: 1.5px solid;
+        }
+
+        .s3c-o {
+            border-color: rgba(240, 125, 58, .25);
+        }
+
+        .s3c-i {
+            border-color: rgba(99, 102, 241, .25);
+        }
+
+        .s3c-g {
+            border-color: rgba(106, 170, 124, .25);
+        }
+
+        .s3c-ico {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .sci-o {
+            background: linear-gradient(135deg, #fff0e0, #ffd8b0);
+        }
+
+        .sci-i {
+            background: linear-gradient(135deg, #eef0ff, #dde0ff);
+        }
+
+        .sci-g {
+            background: linear-gradient(135deg, #edf7f1, #d5eedd);
+        }
+
+        .s3c h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 3px;
+        }
+
+        .s3c p {
+            font-size: 11px;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        .s3c-who {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 50px;
+            white-space: nowrap;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .sw-o {
+            background: #fff0e0;
+            color: #f07d3a;
+        }
+
+        .sw-i {
+            background: #eef0ff;
+            color: #6366f1;
+        }
+
+        .sw-g {
+            background: #edf7f1;
+            color: #6aaa7c;
+        }
+
+        /* ━━━ S4 OUTPUT ━━━ */
+        .s4 {
+            background: white;
+            align-items: center;
+            padding: 52px 60px;
+            flex-direction: column;
+        }
+
+        .s4 .slide-label {
+            color: #6366f1;
+        }
+
+        .s4-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .s4-title span {
+            color: #6366f1;
+        }
+
+        .out-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            width: 100%;
+        }
+
+        .out-card {
+            border-radius: 20px;
+            padding: 24px 20px;
+            border: 1.5px solid;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .oc-i {
+            background: linear-gradient(135deg, #f0f4ff, #e8f0ff);
+            border-color: rgba(99, 102, 241, .3);
+        }
+
+        .oc-o {
+            background: linear-gradient(135deg, #fff7f0, #fff0e4);
+            border-color: rgba(240, 125, 58, .3);
+        }
+
+        .oc-s {
+            background: linear-gradient(135deg, #f8faff, #eef3ff);
+            border-color: rgba(99, 130, 200, .2);
+        }
+
+        .out-card .oc-icon {
+            font-size: 30px;
+        }
+
+        .out-card .oc-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .out-card .oc-sub {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .out-card .oc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .oc-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 50px;
+            background: rgba(99, 102, 241, .1);
+            color: #6366f1;
+        }
+
+        .oc-tag-o {
+            background: rgba(240, 125, 58, .1);
+            color: #f07d3a;
+        }
+
+        .out-card .oc-url {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 8px;
+            margin-top: auto;
+            word-break: break-all;
+        }
+
+        .oc-url-i {
+            background: rgba(99, 102, 241, .08);
+            color: #6366f1;
+        }
+
+        .oc-url-o {
+            background: rgba(240, 125, 58, .08);
+            color: #f07d3a;
+        }
+
+        .oc-url-s {
+            background: rgba(99, 130, 200, .08);
+            color: #6382dc;
+        }
+
+        /* ━━━ S5 WHY SMS ━━━ */
+        .s5 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1a1040 100%);
+            align-items: center;
+            padding: 44px 60px;
+        }
+
+        .s5 .slide-label {
+            color: #a78bfa;
+        }
+
+        .s5-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 44px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .s5-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a78bfa;
+            margin-bottom: 12px;
+        }
+
+        .s5-h {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 30px;
+            color: white;
+            line-height: 1.3;
+            margin-bottom: 14px;
+        }
+
+        .s5-h em {
+            font-style: normal;
+            color: #f07d3a;
+        }
+
+        .s5-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.8;
+        }
+
+        .s5-assets {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-top: 16px;
+        }
+
+        .s5-assets .at {
+            font-size: 9px;
+            font-weight: 700;
+            color: #a78bfa;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .s5-assets .al {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .s5-assets .ai {
+            font-size: 11px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .s5-assets .ai-dim {
+            font-size: 11px;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            grid-column: span 2;
+        }
+
+        .flow-right {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .flow-hub {
+            background: linear-gradient(135deg, rgba(240, 125, 58, .22), rgba(244, 185, 66, .12));
+            border: 1.5px solid rgba(240, 125, 58, .45);
+            border-radius: 14px;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        .flow-hub .fh-e {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .flow-hub .fh-t {
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .flow-hub .fh-s {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .flow-arr {
+            text-align: center;
+            font-size: 15px;
+            color: rgba(240, 125, 58, .5);
+        }
+
+        .flow-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .fc {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .fc-top {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .fc-ico {
+            width: 28px;
+            height: 28px;
+            border-radius: 9px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .fci-o {
+            background: rgba(240, 125, 58, .2);
+        }
+
+        .fci-g {
+            background: rgba(52, 211, 153, .2);
+        }
+
+        .fci-b {
+            background: rgba(96, 165, 250, .2);
+        }
+
+        .fci-v {
+            background: rgba(167, 139, 250, .15);
+        }
+
+        .fc-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .fc-sub {
+            font-size: 9px;
+            color: #64748b;
+        }
+
+        .fc-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .fcb-o {
+            background: rgba(240, 125, 58, .15);
+            color: #fb923c;
+        }
+
+        .fcb-g {
+            background: rgba(52, 211, 153, .15);
+            color: #34d399;
+        }
+
+        .fcb-b {
+            background: rgba(96, 165, 250, .15);
+            color: #60a5fa;
+        }
+
+        .fcb-dim {
+            background: rgba(255, 255, 255, .06);
+            color: #475569;
+        }
+
+        .fc-dim {
+            opacity: .55;
+        }
+
+        /* ━━━ S6 AI TOOLS ━━━ */
+        .s6 {
+            background: linear-gradient(160deg, #0f172a 0%, #1e1b4b 60%, #1e293b 100%);
+            align-items: center;
+            padding: 44px 60px;
+            flex-direction: column;
+        }
+
+        .s6 .slide-label {
+            color: #34d399;
+        }
+
+        .s6-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .s6-title span {
+            color: #34d399;
+        }
+
+        .s6-sub {
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            width: 100%;
+        }
+
+        .ai-card {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 18px;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ai-card .ac-logo {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .ai-card .ac-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+        }
+
+        .ai-card .ac-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            text-align: center;
+            align-self: center;
+        }
+
+        .acb-violet {
+            background: rgba(167, 139, 250, .2);
+            color: #a78bfa;
+        }
+
+        .acb-teal {
+            background: rgba(52, 211, 153, .2);
+            color: #34d399;
+        }
+
+        .acb-amber {
+            background: rgba(251, 191, 36, .2);
+            color: #fbbf24;
+        }
+
+        .acb-blue {
+            background: rgba(96, 165, 250, .2);
+            color: #60a5fa;
+        }
+
+        .ai-card .ac-uses {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .ai-card .ac-use {
+            font-size: 11px;
+            color: #94a3b8;
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+            line-height: 1.45;
+        }
+
+        .ai-card .ac-use::before {
+            content: '•';
+            color: #475569;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ━━━ S7 CLOSING ━━━ */
+        .s7 {
+            background: linear-gradient(135deg, #f07d3a 0%, #e86025 40%, #d45520 100%);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .s7-bg {
+            position: absolute;
+            font-size: 240px;
+            opacity: .07;
+            pointer-events: none;
+        }
+
+        .s7-bg1 {
+            top: -50px;
+            right: -30px;
+            transform: rotate(20deg);
+        }
+
+        .s7-bg2 {
+            bottom: -50px;
+            left: -50px;
+            transform: rotate(-15deg);
+            font-size: 180px;
+        }
+
+        .s7-tag {
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, .65);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .s7-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 60px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .s7-sub {
+            font-size: 18px;
+            color: rgba(255, 255, 255, .72);
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .s7-pts {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .s7-pt {
+            background: rgba(255, 255, 255, .14);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, .22);
+            border-radius: 14px;
+            padding: 12px 20px;
+            text-align: center;
+        }
+
+        .s7-pt .pe {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .s7-pt .pt {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .88);
+            font-weight: 600;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- CONTROLS -->
-<button class="script-toggle" onclick="toggleScript()">📝 トークスクリプト</button>
+    <button class="script-btn" onclick="toggleScript()">📝 トークスクリプト</button>
 
-<div class="slides-wrap">
+    <div class="slides-wrap">
 
-  <!-- ══ SLIDE 1: TITLE ══ -->
-  <div class="slide s1 active" data-idx="0">
-    <div class="s1-bg">
-      <div class="s1-circle s1-c1"></div>
-      <div class="s1-circle s1-c2"></div>
-    </div>
-    <div class="s1-tag">Ideathon 2026 — SMS New Business</div>
-    <div class="s1-emoji">🐾</div>
-    <div class="s1-title"><span>モフ</span> / Mofu</div>
-    <div class="s1-sub">AI搭載コンパニオンロボットによる、高齢者見守りプラットフォーム</div>
-    <div class="s1-badge">SMS New Business — 7min Pitch</div>
-  </div>
-
-  <!-- ══ SLIDE 2: PROBLEM ══ -->
-  <div class="slide s2" data-idx="1">
-    <span class="slide-label">01 — Problem</span>
-    <div class="s2-title">独居高齢者をめぐる、<em>3つの課題</em></div>
-    <div class="problem-grid">
-      <div class="problem-card pc-blue" data-num="01">
-        <span class="who">For Seniors</span>
-        <span class="emoji">😔</span>
-        <div class="pain">孤独・寂しさ</div>
-        <div class="detail">独居高齢者は約700万人。話し相手がいない日が続くことで、認知機能低下や意欲低下が加速します。</div>
-      </div>
-      <div class="problem-card pc-orange" data-num="02">
-        <span class="who">For Family</span>
-        <span class="emoji">😰</span>
-        <div class="pain">見守りの限界</div>
-        <div class="detail">毎日電話もできない。訪問も難しい。でも心配は消えない。適度な距離感での見守り手段がありません。</div>
-      </div>
-      <div class="problem-card pc-green" data-num="03">
-        <span class="who">For Care Managers</span>
-        <span class="emoji">📋</span>
-        <div class="pain">ケア情報の断絶</div>
-        <div class="detail">月1回の訪問では日常の変化を把握しきれず、ケアプランが実態と乖離していくという構造的問題があります。</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 3: SOLUTION ══ -->
-  <div class="slide s3" data-idx="2">
-    <span class="slide-label" style="color:#f07d3a;">02 — Solution</span>
-    <div class="s3-inner">
-      <div class="s3-left">
-        <div class="s3-tag">Solution</div>
-        <div class="s3-title">
-          <em>会話するロボット</em>が、<br>
-          3者をつなぐハブになる
-        </div>
-        <div class="s3-desc">
-          モフは、高齢者の日常に自然に溶け込む<br>
-          AI搭載コンパニオンロボットです。<br><br>
-          会話・センシング・IoT操作を通じて、<br>
-          ご本人・ご家族・ケアマネの<br>
-          三者を一つのプラットフォームで繋ぎます。
-        </div>
-      </div>
-      <div class="s3-right">
-        <div class="s3-card s3c-orange">
-          <div class="s3-card-icon sci-o">🐶</div>
-          <div class="s3-card-text">
-            <h3>AI会話 & 見守り</h3>
-            <p>薬の声かけ・寂しさ解消・日常会話の記録</p>
-          </div>
-          <span class="s3-card-who sw-o">ご本人向け</span>
-        </div>
-        <div class="s3-card s3c-indigo">
-          <div class="s3-card-icon sci-i">📱</div>
-          <div class="s3-card-text">
-            <h3>家族アプリ & 家電操作</h3>
-            <p>リアルタイム確認・SwitchBot連携・メッセージ</p>
-          </div>
-          <span class="s3-card-who sw-i">家族向け</span>
-        </div>
-        <div class="s3-card s3c-green">
-          <div class="s3-card-icon sci-g">✨</div>
-          <div class="s3-card-text">
-            <h3>AIケアサポート</h3>
-            <p>月次サマリー自動生成・サービス提案・ケアプラン補助</p>
-          </div>
-          <span class="s3-card-who sw-g">ケアマネ向け</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 4: DEMO GUIDE ══ -->
-  <div class="slide s4" data-idx="3">
-    <span class="slide-label" style="color:#6366f1; top:36px; left:48px; position:absolute;">03 — Demo</span>
-    <div class="s4-title">実際に動かしてみます — <span>デモの流れ</span></div>
-    <div class="demo-flow">
-      <div class="demo-step">
-        <div class="ds-num">1</div>
-        <span class="ds-emoji">🏠</span>
-        <div class="ds-title">LP確認</div>
-        <div class="ds-detail">モフのランディングページ。3タイプのロボット選択と全機能概要</div>
-        <div class="ds-time">〜1分</div>
-      </div>
-      <div class="demo-step">
-        <div class="ds-num">2</div>
-        <span class="ds-emoji">📱</span>
-        <div class="ds-title">家族アプリ</div>
-        <div class="ds-detail">ロボットのリアルタイム状態・エアコン遠隔操作・タイムライン</div>
-        <div class="ds-time">〜1.5分</div>
-      </div>
-      <div class="demo-step">
-        <div class="ds-num">3</div>
-        <span class="ds-emoji">📊</span>
-        <div class="ds-title">ケアマネ画面</div>
-        <div class="ds-detail">AIレポート・週次/月次グラフ・サービス提案・田中さん詳細</div>
-        <div class="ds-time">〜1.5分</div>
-      </div>
-      <div class="demo-step">
-        <div class="ds-num">4</div>
-        <span class="ds-emoji">🏡</span>
-        <div class="ds-title">SMS連携提案</div>
-        <div class="ds-detail">「モフが気になっていること」— 住宅改修・福祉用具への自然な導線</div>
-        <div class="ds-time">〜1分</div>
-      </div>
-    </div>
-    <div class="demo-note">
-      💡 <strong>デモのポイント：</strong>エアコンのトグルと田中さんの詳細画面→サービス提案タブを必ず見せてください
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 5: WHY SMS ══ -->
-  <div class="slide s5" data-idx="4" style="flex-direction:column; padding:40px 64px; background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#1a1040 100%);">
-    <span class="slide-label" style="color:#a78bfa; position:static; margin-bottom:8px;">04 — Why SMS</span>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; width:100%; flex:1; align-items:center;">
-
-      <!-- Left -->
-      <div>
-        <div class="s5-title" style="font-size:34px; margin-bottom:16px;">
-          モフが生む「気づき」を<br><em>既存事業に繋げる</em>
-        </div>
-        <div class="s5-desc" style="margin-bottom:20px;">
-          SMSは「高齢社会×情報インフラ」を軸に<br>
-          <strong style="color:white;">40以上のサービス</strong>を展開。<br>
-          モフのロボットが日々の会話から拾う<br>
-          ニーズ・リスクを、既存サービスへの<br>
-          <strong style="color:#fb923c;">自然な受注導線</strong>に変換できる唯一の企業です。
-        </div>
-        <!-- SMS asset summary -->
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:16px 20px;">
-          <div style="font-size:10px; font-weight:700; color:#a78bfa; letter-spacing:2px; margin-bottom:12px;">SMS GROUP ASSETS</div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div style="font-size:12px; color:#cbd5e1; display:flex; align-items:center; gap:6px;"><span>📦</span>カイポケ — 56,900事業所</div>
-            <div style="font-size:12px; color:#cbd5e1; display:flex; align-items:center; gap:6px;"><span>👤</span>介護職人材紹介 最大手</div>
-            <div style="font-size:12px; color:#cbd5e1; display:flex; align-items:center; gap:6px;"><span>🏡</span>住宅改修サービス</div>
-            <div style="font-size:12px; color:#cbd5e1; display:flex; align-items:center; gap:6px;"><span>🏥</span>施設・デイサービス紹介</div>
-            <div style="font-size:12px; color:#64748b; display:flex; align-items:center; gap:6px; grid-column:span 2;"><span>＋</span>シニアライフ周辺サービス（将来接続）</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: connection diagram -->
-      <div style="display:flex; flex-direction:column; gap:10px;">
-
-        <!-- Hub -->
-        <div style="background:linear-gradient(135deg,rgba(240,125,58,0.25),rgba(244,185,66,0.15)); border:1.5px solid rgba(240,125,58,0.5); border-radius:16px; padding:14px 18px; text-align:center; margin-bottom:4px;">
-          <div style="font-size:22px; margin-bottom:4px;">🐾</div>
-          <div style="font-size:13px; font-weight:700; color:white;">モフ（会話AI）が検知</div>
-          <div style="font-size:11px; color:#94a3b8; margin-top:2px;">「廊下でふらつく」「底冷えがひどい」「デイに行きたい」</div>
+        <!-- ══ S1 ══ -->
+        <div class="slide s1 active" data-idx="0">
+            <div class="bg-c c1"></div>
+            <div class="bg-c c2"></div>
+            <div class="s1-tag">SMS Ideathon 2026 — New Business</div>
+            <div class="s1-emoji">🐾</div>
+            <div class="s1-title"><span>モフ</span> / Mofu</div>
+            <div class="s1-sub">AI搭載コンパニオンロボットによる、高齢者見守りプラットフォーム</div>
+            <div class="s1-badge">SMS New Business — 7min Pitch</div>
         </div>
 
-        <div style="text-align:center; font-size:18px; color:rgba(240,125,58,0.6);">↓ AIが自動レコメンド ↓</div>
-
-        <!-- 4 services -->
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-          <div class="asset-card" style="padding:12px 14px; flex-direction:column; gap:6px; align-items:flex-start;">
-            <div style="display:flex; align-items:center; gap:8px; width:100%;">
-              <div class="asset-icon ai-o" style="width:32px;height:32px;font-size:16px;">🏡</div>
-              <div style="flex:1;">
-                <div style="font-size:12px; font-weight:700; color:white; line-height:1.3;">住宅改修</div>
-                <div style="font-size:10px; color:#64748b;">手すり・断熱・換気乾燥</div>
-              </div>
+        <!-- ══ S2 ══ -->
+        <div class="slide s2" data-idx="1">
+            <span class="slide-label">01 — 課題設定</span>
+            <div class="s2-title">対象は<em>3者</em>、それぞれの課題</div>
+            <div class="prob-grid">
+                <div class="prob-card pc1" data-n="01">
+                    <span class="who">独居高齢者</span>
+                    <span class="icon">😔</span>
+                    <div class="pain">孤独・寂しさ</div>
+                    <div class="detail">独居高齢者は約700万人。ロボットやAIへの馴染みが薄く、一人暮らしの孤独を日々抱えながらも適切なサポートに繋がれていない。</div>
+                </div>
+                <div class="prob-card pc2" data-n="02">
+                    <span class="who">離れて暮らす家族</span>
+                    <span class="icon">😰</span>
+                    <div class="pain">見守りの限界</div>
+                    <div class="detail">適度な距離感で見守りたいが、毎日の連絡は難しい。異変に気づけないリスクを常に抱えている。</div>
+                </div>
+                <div class="prob-card pc3" data-n="03">
+                    <span class="who">ケアマネ・地域包括</span>
+                    <span class="icon">📋</span>
+                    <div class="pain">日常把握の困難</div>
+                    <div class="detail">月1回の訪問では日常の状態を把握しきれず、適切なケアプランや社会資源の提案が難しいという構造的問題がある。</div>
+                </div>
             </div>
-            <div style="width:100%; background:rgba(240,125,58,0.15); border-radius:6px; padding:4px 8px; font-size:10px; color:#fb923c; font-weight:700; text-align:center;">成果報酬型収益</div>
-          </div>
-
-          <div class="asset-card" style="padding:12px 14px; flex-direction:column; gap:6px; align-items:flex-start;">
-            <div style="display:flex; align-items:center; gap:8px; width:100%;">
-              <div class="asset-icon ai-g" style="width:32px;height:32px;font-size:16px;">🏥</div>
-              <div style="flex:1;">
-                <div style="font-size:12px; font-weight:700; color:white; line-height:1.3;">施設・デイ紹介</div>
-                <div style="font-size:10px; color:#64748b;">AIが「デイ追加」を推奨</div>
-              </div>
-            </div>
-            <div style="width:100%; background:rgba(52,211,153,0.15); border-radius:6px; padding:4px 8px; font-size:10px; color:#34d399; font-weight:700; text-align:center;">紹介料収益</div>
-          </div>
-
-          <div class="asset-card" style="padding:12px 14px; flex-direction:column; gap:6px; align-items:flex-start;">
-            <div style="display:flex; align-items:center; gap:8px; width:100%;">
-              <div class="asset-icon ai-b" style="width:32px;height:32px;font-size:16px;">📦</div>
-              <div style="flex:1;">
-                <div style="font-size:12px; font-weight:700; color:white; line-height:1.3;">カイポケ深化</div>
-                <div style="font-size:10px; color:#64748b;">モフデータ→ケアプラン自動生成</div>
-              </div>
-            </div>
-            <div style="width:100%; background:rgba(96,165,250,0.15); border-radius:6px; padding:4px 8px; font-size:10px; color:#60a5fa; font-weight:700; text-align:center;">SaaS ARPU向上</div>
-          </div>
-
-          <div class="asset-card" style="padding:12px 14px; flex-direction:column; gap:6px; align-items:flex-start; opacity:0.6;">
-            <div style="display:flex; align-items:center; gap:8px; width:100%;">
-              <div class="asset-icon ai-v" style="width:32px;height:32px;font-size:16px;">🕊️</div>
-              <div style="flex:1;">
-                <div style="font-size:12px; font-weight:700; color:white; line-height:1.3;">シニアライフ周辺</div>
-                <div style="font-size:10px; color:#64748b;">終活・エンディング支援等</div>
-              </div>
-            </div>
-            <div style="width:100%; background:rgba(167,139,250,0.1); border-radius:6px; padding:4px 8px; font-size:10px; color:#94a3b8; font-weight:700; text-align:center;">将来接続（検討中）</div>
-          </div>
         </div>
 
-      </div>
+        <!-- ══ S3 ══ -->
+        <div class="slide s3" data-idx="2">
+            <span class="slide-label">02 — 解決アイデア</span>
+            <div class="s3-inner">
+                <div>
+                    <div class="s3-tag">Solution</div>
+                    <div class="s3-h"><em>会話するロボット</em>が<br>3者をつなぐハブになる</div>
+                    <div class="s3-desc">
+                        猫型・犬型の愛着を持てるデザインで、AIが日常会話で孤独を和らげ「見守られている」安心感を提供。<br><br>
+                        会話・センシング・IoT操作を通じて、ご本人・家族・ケアマネの三者を一つのプラットフォームで繋ぎます。
+                    </div>
+                </div>
+                <div class="s3-cards">
+                    <div class="s3c s3c-o">
+                        <div class="s3c-ico sci-o">🐱</div>
+                        <div style="flex:1;">
+                            <h3>AI会話 & 見守り</h3>
+                            <p>薬の声かけ・孤独解消・日常会話の記録<br>猫型・犬型から選べる愛着デザイン</p>
+                        </div>
+                        <span class="s3c-who sw-o">ご本人向け</span>
+                    </div>
+                    <div class="s3c s3c-i">
+                        <div class="s3c-ico sci-i">📱</div>
+                        <div style="flex:1;">
+                            <h3>家族アプリ & IoT家電操作</h3>
+                            <p>1日の活動タイムライン確認<br>エアコン等の遠隔操作（SwitchBot連携）</p>
+                        </div>
+                        <span class="s3c-who sw-i">家族向け</span>
+                    </div>
+                    <div class="s3c s3c-g">
+                        <div class="s3c-ico sci-g">✨</div>
+                        <div style="flex:1;">
+                            <h3>AIケアサポートダッシュボード</h3>
+                            <p>月次サマリー自動生成・ケアプランへのサジェスト<br>社会資源・介護サービスをAIが提案</p>
+                        </div>
+                        <span class="s3c-who sw-g">ケアマネ向け</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ S4 ══ -->
+        <div class="slide s4" data-idx="3">
+            <span class="slide-label">03 — アウトプット</span>
+            <div class="s4-title">作ったもの — <span>3つのアウトプット</span></div>
+            <div class="out-grid">
+                <div class="out-card oc-i">
+                    <div class="oc-icon">📱</div>
+                    <div class="oc-title">デモアプリ</div>
+                    <div class="oc-sub">家族向け画面（オレンジ系テーマ）・ケアマネ向けダッシュボード・利用者詳細画面の3ビューを実装。GitHub Pages にて公開済み。</div>
+                    <div class="oc-tags">
+                        <span class="oc-tag">React</span>
+                        <span class="oc-tag">Tailwind CSS</span>
+                        <span class="oc-tag">モバイルファースト</span>
+                    </div>
+                    <div class="oc-url oc-url-i">🔗 katoys.github.io/digital-tail/</div>
+                </div>
+                <div class="out-card oc-o">
+                    <div class="oc-icon">🌐</div>
+                    <div class="oc-title">LP（ランディングページ）</div>
+                    <div class="oc-sub">モフのプロダクト紹介ページ。3タイプのロボット選択・各ユーザー向け機能紹介・IoT操作デモを含む。静的HTMLとしてGitHub Pagesに同梱。</div>
+                    <div class="oc-tags">
+                        <span class="oc-tag oc-tag-o">HTML</span>
+                        <span class="oc-tag oc-tag-o">CSS</span>
+                        <span class="oc-tag oc-tag-o">JavaScript</span>
+                    </div>
+                    <div class="oc-url oc-url-o">🔗 GitHub Pages 同梱</div>
+                </div>
+                <div class="out-card oc-s">
+                    <div class="oc-icon">🎤</div>
+                    <div class="oc-title">ピッチ資料</div>
+                    <div class="oc-sub">本スライド（mofu-pitch.html）。トークスクリプト内蔵・16:9対応・キーボード操作対応。全アウトプットはGitHubリポジトリで管理。</div>
+                    <div class="oc-tags">
+                        <span class="oc-tag">HTML</span>
+                        <span class="oc-tag">スクリプト内蔵</span>
+                    </div>
+                    <div class="oc-url oc-url-s">🔗 GitHub 管理済み</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ S5 ══ -->
+        <div class="slide s5" data-idx="4">
+            <span class="slide-label">04 — SMSがやる意味</span>
+            <div class="s5-inner">
+                <div>
+                    <div class="s5-tag">Why SMS</div>
+                    <div class="s5-h">モフが生む「気づき」を<br><em>既存事業に繋げる</em></div>
+                    <div class="s5-desc">SMSは「高齢社会×情報インフラ」を軸に<strong
+                            style="color:white;">40以上のサービス</strong>を展開。モフが日々の会話から拾うニーズ・リスクを、既存サービスへの<strong
+                            style="color:#fb923c;">自然な受注導線</strong>に変換できる唯一の企業です。</div>
+                    <div class="s5-assets">
+                        <div class="at">SMS GROUP ASSETS</div>
+                        <div class="al">
+                            <div class="ai"><span>📦</span>カイポケ — 56,900事業所</div>
+                            <div class="ai"><span>👤</span>介護職人材紹介 最大手</div>
+                            <div class="ai"><span>🏡</span>住宅改修サービス</div>
+                            <div class="ai"><span>🏥</span>施設・デイサービス紹介</div>
+                            <div class="ai-dim"><span>＋</span>シニアライフ周辺サービス（将来接続）</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-right">
+                    <div class="flow-hub">
+                        <div class="fh-e">🐾</div>
+                        <div class="fh-t">モフ（会話AI）が検知</div>
+                        <div class="fh-s">「廊下でふらつく」「底冷えがひどい」「デイに行きたい」</div>
+                    </div>
+                    <div class="flow-arr">↓ AIが自動レコメンド ↓</div>
+                    <div class="flow-cards">
+                        <div class="fc">
+                            <div class="fc-top">
+                                <div class="fc-ico fci-o">🏡</div>
+                                <div>
+                                    <div class="fc-name">住宅改修</div>
+                                    <div class="fc-sub">手すり・断熱・換気</div>
+                                </div>
+                            </div>
+                            <div class="fc-badge fcb-o">成果報酬型</div>
+                        </div>
+                        <div class="fc">
+                            <div class="fc-top">
+                                <div class="fc-ico fci-g">🏥</div>
+                                <div>
+                                    <div class="fc-name">施設・デイ紹介</div>
+                                    <div class="fc-sub">AIが入居タイミング検知</div>
+                                </div>
+                            </div>
+                            <div class="fc-badge fcb-g">紹介料収益</div>
+                        </div>
+                        <div class="fc">
+                            <div class="fc-top">
+                                <div class="fc-ico fci-b">📦</div>
+                                <div>
+                                    <div class="fc-name">カイポケ深化</div>
+                                    <div class="fc-sub">モフデータ→ケアプラン</div>
+                                </div>
+                            </div>
+                            <div class="fc-badge fcb-b">ARPU向上</div>
+                        </div>
+                        <div class="fc fc-dim">
+                            <div class="fc-top">
+                                <div class="fc-ico fci-v">🕊️</div>
+                                <div>
+                                    <div class="fc-name">シニアライフ周辺</div>
+                                    <div class="fc-sub">終活・エンディング等</div>
+                                </div>
+                            </div>
+                            <div class="fc-badge fcb-dim">将来接続（検討中）</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ S6 ══ -->
+        <div class="slide s6" data-idx="5">
+            <span class="slide-label">05 — AI活用の舞台裏</span>
+            <div class="s6-title">全工程を<span>AIと一緒に</span>作った</div>
+            <div class="s6-sub">アイデアソンのほぼ全作業工程でAIをフル活用しました</div>
+            <div class="ai-grid">
+                <div class="ai-card">
+                    <div class="ac-logo">🤖</div>
+                    <div class="ac-name">Claude Code</div>
+                    <div class="ac-badge acb-violet">開発 / 設計</div>
+                    <div class="ac-uses">
+                        <div class="ac-use">UIプロトタイプ生成</div>
+                        <div class="ac-use">アプリ名候補の提案</div>
+                        <div class="ac-use">README作成</div>
+                        <div class="ac-use">作業ログまとめ</div>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <div class="ac-logo">🪄</div>
+                    <div class="ac-name">Claude Cowork</div>
+                    <div class="ac-badge acb-teal">運用 / 自動化</div>
+                    <div class="ac-uses">
+                        <div class="ac-use">GitHubリポジトリ作成</div>
+                        <div class="ac-use">メンバー招待</div>
+                        <div class="ac-use">ファイルコミット</div>
+                        <div class="ac-use">作業ログ自動取得</div>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <div class="ac-logo">💬</div>
+                    <div class="ac-name">ChatGPT (GPT-4o)</div>
+                    <div class="ac-badge acb-amber">画像生成</div>
+                    <div class="ac-uses">
+                        <div class="ac-use">ロボットの商品イメージ画像生成</div>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <div class="ac-logo">💎</div>
+                    <div class="ac-name">Gemini</div>
+                    <div class="ac-badge acb-blue">画像 / ネーミング</div>
+                    <div class="ac-uses">
+                        <div class="ac-use">サービス概要イメージ画像生成</div>
+                        <div class="ac-use">チーム名候補の生成</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ S7 ══ -->
+        <div class="slide s7" data-idx="6">
+            <div class="s7-bg s7-bg1">🐾</div>
+            <div class="s7-bg s7-bg2">🐾</div>
+            <div class="s7-tag">Mofu — AI Companion Robot Platform</div>
+            <div class="s7-title">そばにいる、<br>つながっている。</div>
+            <div class="s7-sub">高齢者の「会話」から、ケアと暮らしを変える。<br>SMSの資産と掛け合わせた、新しい見守りエコシステム。</div>
+            <div class="s7-pts">
+                <div class="s7-pt"><span class="pe">🐱</span>
+                    <div class="pt">3者をつなぐロボット</div>
+                </div>
+                <div class="s7-pt"><span class="pe">📱</span>
+                    <div class="pt">デモアプリ公開済み</div>
+                </div>
+                <div class="s7-pt"><span class="pe">🤖</span>
+                    <div class="pt">全工程AIで制作</div>
+                </div>
+                <div class="s7-pt"><span class="pe">🏢</span>
+                    <div class="pt">SMS既存事業と接続</div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <!-- ══ SLIDE 6: REVENUE ══ -->
-  <div class="slide s6" data-idx="5">
-    <span class="slide-label">05 — Business</span>
-    <div class="s6-title">収益モデル — <span>4つの柱</span></div>
-    <div class="revenue-flow">
-      <div class="rev-box">
-        <span class="rb-emoji">🐾</span>
-        <div class="rb-title">ロボット<br>サブスク</div>
-        <div class="rb-detail">月額利用料<br>本体レンタル込み</div>
-        <div class="rb-badge rbb-orange">MRR基盤</div>
-      </div>
-      <div class="rev-arrow">→</div>
-      <div class="rev-box">
-        <span class="rb-emoji">🏡</span>
-        <div class="rb-title">住宅改修<br>レコメンド</div>
-        <div class="rb-detail">会話AIが検知<br>→ 申込誘導</div>
-        <div class="rb-badge rbb-blue">成果報酬型</div>
-      </div>
-      <div class="rev-arrow">→</div>
-      <div class="rev-box">
-        <span class="rb-emoji">🏥</span>
-        <div class="rb-title">施設・デイ<br>紹介</div>
-        <div class="rb-detail">AIが入居・通所<br>タイミングを検知</div>
-        <div class="rb-badge rbb-green">紹介料収益</div>
-      </div>
-      <div class="rev-arrow">→</div>
-      <div class="rev-box">
-        <span class="rb-emoji">📋</span>
-        <div class="rb-title">施設・<br>SaaS連携</div>
-        <div class="rb-detail">施設紹介料<br>既存SaaS深化</div>
-        <div class="rb-badge rbb-amber">ストック型</div>
-      </div>
+    <!-- NAV -->
+    <div class="nav">
+        <button onclick="prev()">←</button>
+        <div class="nav-dots" id="dots"></div>
+        <span class="nav-counter" id="counter">1 / 7</span>
+        <button onclick="next()">→</button>
     </div>
-    <div class="s6-note">
-      <div class="s6-note-item">
-        <div class="sni-val">700万人+</div>
-        <div class="sni-label">独居高齢者（潜在ユーザー）</div>
-      </div>
-      <div class="s6-note-item">
-        <div class="sni-val">月額 ¥5,000〜</div>
-        <div class="sni-label">想定サブスク単価</div>
-      </div>
-      <div class="s6-note-item">
-        <div class="sni-val">×4</div>
-        <div class="sni-label">サブスク以外の収益接点</div>
-      </div>
+
+    <div class="script-panel" id="scriptPanel">
+        <div class="st" id="st"></div>
+        <p class="sb" id="sb"></p>
     </div>
-  </div>
 
-  <!-- ══ SLIDE 7: CLOSING ══ -->
-  <div class="slide s7" data-idx="6">
-    <div class="s7-bg s7-bg1">🐾</div>
-    <div class="s7-bg s7-bg2">🐾</div>
-    <div class="s7-tag">Mofu — AI Companion Robot Platform</div>
-    <div class="s7-title">そばにいる、<br>つながっている。</div>
-    <div class="s7-sub">
-      高齢者の「会話」から、ケアと暮らしを変える。<br>
-      SMSの資産と掛け合わせた、新しい見守りエコシステム。
-    </div>
-    <div class="s7-points">
-      <div class="s7-point">
-        <span class="sp-emoji">🐶</span>
-        <div class="sp-text">3タイプのロボット</div>
-      </div>
-      <div class="s7-point">
-        <span class="sp-emoji">👨‍👩‍👧</span>
-        <div class="sp-text">3者をつなぐプラットフォーム</div>
-      </div>
-      <div class="s7-point">
-        <span class="sp-emoji">💰</span>
-        <div class="sp-text">4つの収益柱</div>
-      </div>
-      <div class="s7-point">
-        <span class="sp-emoji">🏢</span>
-        <div class="sp-text">SMS固有の競争優位</div>
-      </div>
-    </div>
-  </div>
+    <script>
+        const scripts = [
+            { t: "0:00〜0:40", s: "「こんにちは。今日は『モフ』というプロダクトをご紹介します。\n\nモフは、独居高齢者のそばに置くAI搭載のコンパニオンロボットです。猫型・犬型のやわらかいデザインで、ただの機械ではなく『家族の一員』のような存在を目指しています。\n\nひとことで言うと——高齢者の毎日の会話から、ケアと暮らしを変えるプラットフォームを作ります。」" },
+            { t: "0:40〜1:30", s: "「課題は3者あります。\n\n1つ目、独居高齢者。約700万人いますが、ロボットやAIへの馴染みが薄く、孤独を抱えたまま適切なサポートに繋がれていない。\n\n2つ目、離れて暮らす家族。適度な距離感で見守りたいのに、毎日の連絡は難しく、異変に気づけないリスクを常に抱えている。\n\n3つ目、ケアマネ・地域包括。月1回の訪問では日常の状態を把握できず、適切なケアプランや社会資源の提案が構造的に難しい状況があります。」" },
+            { t: "1:30〜2:20", s: "「モフはこの3つの課題を1つのプラットフォームで解決します。\n\nロボット本体は猫型・犬型から選べる愛着デザインで、AIが日常会話で孤独を和らげます。\n\n家族向けアプリでは、1日の活動タイムラインの確認と、エアコン・照明・テレビの遠隔操作ができます。『室温が29度』のアラートを受けたら、家族がスマホからエアコンをつけてあげられる。\n\nケアマネ向けダッシュボードでは、日々の活動データから月次サマリーを自動生成し、AIがケアプランへの提案内容をサジェストします。」" },
+            { t: "2:20〜3:40【デモ】", s: "「実際に動かします。\n\n【LP】まずランディングページ。3タイプのロボット選択UIと機能概要が確認できます。\n\n【家族アプリ】家族向けアプリ。エアコンのトグルを操作してみます——こんな感じで遠隔でつけてあげられます。タイムラインで今日の出来事も確認できます。\n\n【ケアマネ画面】ケアマネ向けダッシュボード。週次・月次のAIレポートが自動生成されています。田中花子さんのカードをタップ——詳細の『サービス提案タブ』を見てください。会話ログから地域サロンへの興味を検知して、根拠付きで提案しています。」" },
+            { t: "3:40〜4:50", s: "「なぜSMSがやるべきか、を話します。\n\nSMSはカイポケが全国56,900事業所に入っていて、住宅改修・施設紹介など高齢者周辺の事業を40以上持っています。\n\nモフがやることは、この既存アセットへの『入口』を作ることです。『廊下でふらつく』という会話から住宅改修へ、『デイに行きたい』という声から施設紹介へ——会話からAIが拾って届ける。カイポケとの統合でケアプランの自動生成にも繋がりARPU向上にも貢献します。\n\n右下は終活・エンディング支援など将来的な接続余地として控えめに示しています。」" },
+            { t: "4:50〜6:10", s: "「今回のアイデアソン、実はほぼ全工程をAIで作りました。\n\nClaude CodeでUIプロトタイプの生成・アプリ名の提案・READMEまで。Claude CoworkでGitHubのリポジトリ作成・メンバー招待・ファイルコミットを自動化。ChatGPTでロボットの商品イメージ画像を、GeminiでLP用の画像とチーム名候補を生成しました。\n\nAIを道具として使うというより、チームメンバーとして一緒に作った感覚です。今後モフのAI機能を実装する際にも、このノウハウがそのまま活きてきます。」" },
+            { t: "6:10〜7:00", s: "「まとめます。\n\nモフは『そばにいる、つながっている』をコンセプトに、高齢者・家族・ケアマネの三者をつなぐプラットフォームです。\n\nデモアプリとLPはGitHub Pagesで公開済み、今日実際に動くものをお見せしました。全工程をAIと一緒に作りました。そしてSMSの既存事業——カイポケ・住宅改修・施設紹介——との自然な接続によって、SMSだからこそ実現できる競争優位があります。\n\nご清聴ありがとうございました。」" }
+        ];
 
-</div><!-- /slides-wrap -->
+        const slidesEl = document.querySelectorAll('.slide');
+        const dotsEl = document.getElementById('dots');
+        const counterEl = document.getElementById('counter');
+        let cur = 0;
 
-<!-- NAVIGATION -->
-<div class="nav">
-  <button onclick="prev()">←</button>
-  <div class="nav-dots" id="dots"></div>
-  <span class="nav-counter" id="counter">1 / 7</span>
-  <button onclick="next()">→</button>
-</div>
+        slidesEl.forEach((_, i) => {
+            const d = document.createElement('button');
+            d.className = 'dot' + (i === 0 ? ' active' : '');
+            d.onclick = () => goTo(i);
+            dotsEl.appendChild(d);
+        });
 
-<!-- SCRIPT PANEL -->
-<div class="script-panel" id="scriptPanel">
-  <div class="time" id="scriptTime"></div>
-  <p id="scriptText"></p>
-</div>
+        function goTo(n) {
+            slidesEl[cur].classList.remove('active');
+            dotsEl.children[cur].classList.remove('active');
+            cur = (n + slidesEl.length) % slidesEl.length;
+            slidesEl[cur].classList.add('active');
+            dotsEl.children[cur].classList.add('active');
+            counterEl.textContent = `${cur + 1} / ${slidesEl.length}`;
+            const sc = scripts[cur];
+            document.getElementById('st').textContent = sc.t;
+            document.getElementById('sb').innerHTML = sc.s.replace(/\n/g, '<br>');
+        }
+        function next() { goTo(cur + 1); }
+        function prev() { goTo(cur - 1); }
+        function toggleScript() { document.getElementById('scriptPanel').classList.toggle('open'); }
 
-<script>
-const slides = document.querySelectorAll('.slide');
-const dotsEl = document.getElementById('dots');
-const counterEl = document.getElementById('counter');
-const scriptTexts = [
-  {
-    time: "0:00〜0:40（約40秒）",
-    text: "「こんにちは。SMSのSABAです。今日は『モフ』というプロダクトをご紹介します。\n\nモフは、独居高齢者のそばに置く、AIが搭載されたコンパニオンロボットです。わんこ・にゃんこ・ロボットの3タイプから選べて、ただの機械というよりも、温もりを感じられる存在です。ひとことで言うと——高齢者の『毎日の会話』から、ケアと暮らしを変えるプラットフォームを作ります。」"
-  },
-  {
-    time: "0:40〜1:30（約50秒）",
-    text: "「まず、解決したい課題が3つあります。\n\n1つ目は、独居高齢者の孤独。独居高齢者は現在約700万人。話し相手がいない日が続くことで、認知機能の低下が加速することがわかっています。\n\n2つ目は、家族の見守りの限界。毎日電話もできないし、頻繁に訪問もできない。でも心配は消えない。\n\n3つ目が、ケアマネの情報断絶。月1回の訪問では日常の変化を把握できず、ケアプランが実態と乖離していく——これは構造的な問題です。」"
-  },
-  {
-    time: "1:30〜2:10（約40秒）",
-    text: "「モフはこの3つの課題を、1つのプラットフォームで解決します。\n\nロボット本体が高齢者の日常に溶け込み、会話・センシング・IoT操作の3機能を担います。その情報が、家族向けアプリとケアマネ向けダッシュボードに繋がっています。\n\nいわば、ロボットが高齢者・家族・ケアマネをつなぐ『ハブ』になるイメージです。実際の画面を見ていただきながら説明します。」"
-  },
-  {
-    time: "2:10〜4:00（約1分50秒）【デモ】",
-    text: "「【LP】まずランディングページです。ロボットの3タイプを選べるUIと、各ユーザー向けの機能を確認できます。\n\n【家族アプリ】次に家族向けアプリ。ポイントはこのエアコンのコントロールです。『室温が29度です』というアラートが来たとき、家族がここから直接エアコンをつけてあげられます。高齢者はエアコンをつけないことが多いので、遠隔から操作できることが重要なんです。\n\n【ケアマネ画面】次がケアマネ向けダッシュボードです。AIが週次・月次のサマリーを自動生成します。田中花子さんのカードをタップしてください——この詳細画面の『サービス提案タブ』を見てください。会話ログから『地域サロンへの興味』を検知して、具体的なサービスを根拠付きで提案しています。」"
-  },
-  {
-    time: "4:00〜5:20（約1分20秒）",
-    text: "「なぜSMSがこれをやるべきか、を話します。\n\nSMSはすでに高齢者周辺で40以上のサービスを持っています。ケアマネ向けSaaSの『カイポケ』は全国56,900事業所に入っていて、業界で圧倒的なシェアがあります。介護職の人材紹介も最大手クラス。さらに住宅改修・施設紹介まで持っている。\n\nモフがやることは、この既存アセットへの『入口』を作ることです。\n\n（画像を見せながら）これが実際のUI。モフが会話の中で『廊下でふらつく』を検知したら、手すり設置を提案。『お風呂が寒い』なら換気乾燥機。これがSMSの住宅改修事業に繋がります。『そろそろデイに行きたい』という声があれば、施設・デイサービスの紹介へ。\n\n右下に『シニアライフ周辺・将来接続』と控えめに書いてありますが、ここには終活・エンディング支援など今後の接続余地も持たせています。ただプレゼンでは前面には出さず、モフの会話データが長期的にシニアのライフステージ全体と繋がれるという可能性として示しています。\n\nカイポケとの統合によりケアプランの自動生成にも繋がり、SaaSとしてのARPU向上にも貢献します。」"
-  },
-  {
-    time: "5:20〜6:10（約50秒）",
-    text: "「収益モデルは4つの柱から成ります。\n\nまずロボットのサブスクリプション月額収入が基盤になります。その上に、住宅改修・福祉用具の成果報酬型収入、施設紹介料、そして既存ケアマネSaaSとの連携深化という4つが乗ります。\n\nポテンシャルとして、独居高齢者は700万人います。月額5,000円のサブスクを起点に、1ユーザーあたり4つの収益接点を持てる構造です。SMSが既に持っている顧客基盤・サービス網・ケアマネネットワークを活用することで、他社には真似できない参入障壁を作れます。」"
-  },
-  {
-    time: "6:10〜7:00（約50秒）",
-    text: "「まとめます。\n\nモフは『そばにいる、つながっている』をコンセプトに、高齢者・家族・ケアマネの三者をつなぐプラットフォームです。\n\nロボット単体の販売ではなく、SMSの既存アセット——住宅改修、福祉用具、施設紹介、SaaS——とのエコシステムを構築することで、SMSだからこそ実現できる新しい介護DXを提案します。\n\nご清聴ありがとうございました。デモはいつでも動かせますので、ご質問があればぜひ。」"
-  }
-];
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') next();
+            if (e.key === 'ArrowLeft') prev();
+            if (e.key === 's' || e.key === 'S') toggleScript();
+        });
 
-let current = 0;
+        goTo(0);
 
-// Build dots
-slides.forEach((_, i) => {
-  const d = document.createElement('button');
-  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  d.onclick = () => goTo(i);
-  dotsEl.appendChild(d);
-});
-
-function goTo(n) {
-  slides[current].classList.remove('active');
-  dotsEl.children[current].classList.remove('active');
-  current = (n + slides.length) % slides.length;
-  slides[current].classList.add('active');
-  dotsEl.children[current].classList.add('active');
-  counterEl.textContent = `${current+1} / ${slides.length}`;
-  // Update script
-  const s = scriptTexts[current];
-  document.getElementById('scriptTime').textContent = s.time;
-  document.getElementById('scriptText').innerHTML = s.text.replace(/\n/g, '<br>');
-}
-function next() { goTo(current + 1); }
-function prev() { goTo(current - 1); }
-function toggleScript() {
-  document.getElementById('scriptPanel').classList.toggle('open');
-}
-
-// Keyboard
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') next();
-  if (e.key === 'ArrowLeft') prev();
-  if (e.key === 's' || e.key === 'S') toggleScript();
-});
-
-// Init script display
-goTo(0);
-
-// ── 16:9 dynamic resize ──────────────────────────
-function resizeSlides() {
-  const NAV_H = 80;
-  const maxW = 1280, ratio = 9 / 16;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight - NAV_H;
-  let w = Math.min(vw, maxW);
-  let h = w * ratio;
-  if (h > vh) { h = vh; w = h / ratio; }
-  w = Math.floor(w); h = Math.floor(h);
-  document.querySelectorAll('.slide').forEach(s => {
-    s.style.width  = w + 'px';
-    s.style.height = h + 'px';
-  });
-}
-resizeSlides();
-window.addEventListener('resize', resizeSlides);
-</script>
+        function resize() {
+            const NAV = 72, maxW = 1280;
+            const vw = window.innerWidth, vh = window.innerHeight - NAV;
+            let w = Math.min(vw, maxW);
+            let h = w * 9 / 16;
+            if (h > vh) { h = vh; w = h * 16 / 9; }
+            document.querySelectorAll('.slide').forEach(s => {
+                s.style.width = Math.floor(w) + 'px';
+                s.style.height = Math.floor(h) + 'px';
+            });
+        }
+        resize();
+        window.addEventListener('resize', resize);
+    </script>
 </body>
+
 </html>
