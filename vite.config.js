@@ -5,5 +5,8 @@ const repo = process.env.GITHUB_REPOSITORY?.split("/")[1];
 
 export default defineConfig({
   plugins: [react()],
-  base: repo ? `/${repo}/` : "/",
+  base: repo ? `/${repo}/app/` : "/",
+  build: {
+    outDir: "dist/app",
+  },
 });
