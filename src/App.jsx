@@ -7,6 +7,7 @@ import UserDetailScreen from "./components/UserDetailScreen.jsx";
 export default function App() {
   const [screen, setScreen] = useState("family");
   const [showDetail, setShowDetail] = useState(false);
+  const [petType, setPetType] = useState("dog");
 
   return (
     <div
@@ -20,7 +21,7 @@ export default function App() {
         {showDetail ? (
           <UserDetailScreen onBack={() => setShowDetail(false)} />
         ) : screen === "family" ? (
-          <FamilyApp />
+          <FamilyApp petType={petType} setPetType={setPetType} />
         ) : (
           <CareDashboard onOpenDetail={() => setShowDetail(true)} />
         )}
