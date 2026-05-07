@@ -6,34 +6,45 @@
 
 ユーザーとのコミュニケーションは日本語で行うこと。
 
+## 開発コマンド
+
+```bash
+npm install       # 依存パッケージのインストール
+npm run dev       # 開発サーバー起動（Vite）
+npm run build     # プロダクションビルド
+npm run preview   # ビルド結果のプレビュー
+```
+
 ## リポジトリ概要
 
-**ポチ** — 高齢者向けAIコンパニオンロボットのシングルファイル React デモアプリ。
-アプリ全体は `file.jsx` に収まっており、ビルドシステム・package.json・テストスイートは存在しない。
+**ポチ** — 高齢者向けAIコンパニオンロボットの React デモアプリ（Vite + Tailwind CSS）。
+バックエンドなし、テストスイートなし。すべてのデータは静的モック。
 
 ## アーキテクチャ
-
-`file.jsx` は自己完結型の React コンポーネントファイル（JSX、TypeScript なし）。
-すべてのコンポーネント・モックデータ・スタイルがこの1ファイルに同居している。
 
 **`App`（ルート）が制御する画面階層:**
 
 ```
-App
-├── FamilyApp          — 家族向け画面（オレンジ系テーマ）
-│   ├── ApplianceCard  — 家電コントロール（エアコン/照明/テレビ）
-│   └── CareProposalCard (forFamily=true)
-├── CareDashboard      — ケアマネージャー向けダッシュボード
-│   └── CareProposalCard (forFamily=false)
-└── UserDetailScreen   — 利用者詳細（タブ: 月次サマリー / サービス提案 / 支援記録）
-    └── CareProposalCard (forFamily=false)
+src/
+├── App.jsx                          # ルート（画面切替・ボトムナビ）
+├── components/
+│   ├── FamilyApp.jsx                — 家族向け画面（オレンジ系テーマ）
+│   ├── CareDashboard.jsx            — ケアマネージャー向けダッシュボード
+│   ├── UserDetailScreen.jsx         — 利用者詳細（3タブ）
+│   ├── ApplianceCard.jsx            — 家電コントロール（エアコン/照明/テレビ）
+│   ├── CareProposalCard.jsx         — ケア提案カード（家族・CM共用）
+│   └── ui/
+│       ├── PawPrint.jsx             — 肉球 SVG アイコン
+│       └── MiniBar.jsx              — インライン進捗バー
+└── data/
+    └── mock.jsx                     — 全静的データ・STATUS 定数
 ```
 
 ナビゲーションは `App` の `useState` 2つで管理: `screen`（`"family"` | `"care"`）と `showDetail`（boolean）。ルーターライブラリは使用しない。
 
 **主要な設計方針:**
 - 状態はすべてコンポーネントローカル（`useState`）。グローバル状態管理なし。
-- データはすべてファイル先頭に定義された静的モックデータ（`timeline`, `appliances`, `weeklyScores`, `monthlyHighlights`, `careUsers`, `careProposals`）。
-- スタイリングは Tailwind CSS ユーティリティクラスのインライン記述。CSS ファイルなし。
+- `src/data/mock.jsx` に全モックデータを集約。`careProposals` のアイコンはコンポーネント参照（`Icon: Users` 等）で保持し、`CareProposalCard` 内で `<p.Icon size={15} />` としてレンダリング。
+- スタイリングは Tailwind CSS ユーティリティクラスのインライン記述。CSS ファイルは `src/index.css`（Tailwind ディレクティブのみ）。
 - `CareProposalCard` は家族画面・ケアマネ画面の両方で再利用。`forFamily` props でアクションボタンの表示を切り替える。
 - モバイル向けレイアウト（`max-w-md`）、デスクトップでは中央寄せ。
