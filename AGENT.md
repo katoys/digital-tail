@@ -20,13 +20,23 @@ npm run preview   # ビルド結果のプレビュー
 **ポチ** — 高齢者向けAIコンパニオンロボットの React デモアプリ（Vite + Tailwind CSS）。
 バックエンドなし、テストスイートなし。すべてのデータは静的モック。
 
+## URL 構成（GitHub Pages）
+
+| パス | 内容 |
+|---|---|
+| `https://katoys.github.io/digital-tail/` | LP（静的 HTML） |
+| `https://katoys.github.io/digital-tail/app/` | React デモアプリ |
+
+LP は `lp/` 配下の静的ファイル（ビルド不要）。デプロイ時に React ビルド（`dist/app/`）と LP（`dist/`）を合成して GitHub Pages へ配信する。
+
 ## アーキテクチャ
 
-**`App`（ルート）が制御する画面階層:**
-
 ```
+lp/
+└── index.html                       — LP（静的 HTML・ビルド不要）
+
 src/
-├── App.jsx                          # ルート（画面切替・ボトムナビ）
+├── App.jsx                          — ルート（画面切替・ボトムナビ）
 ├── components/
 │   ├── FamilyApp.jsx                — 家族向け画面（オレンジ系テーマ）
 │   ├── CareDashboard.jsx            — ケアマネージャー向けダッシュボード

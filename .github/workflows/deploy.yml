@@ -26,6 +26,7 @@ jobs:
       - run: npm run build
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
+      - run: cp -r lp/. dist/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
