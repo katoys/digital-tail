@@ -27,6 +27,7 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
       - run: cp -r lp/. dist/
+      - run: cp -r pitch dist/pitch
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
