@@ -70,7 +70,7 @@ export default function UserDetailScreen({ onBack }) {
               <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">
                 ● 良好
               </span>
-              <span className="text-[11px] text-slate-400">ロボット：ポチ</span>
+              <span className="text-[11px] text-slate-400">ロボット：モフ</span>
             </div>
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function UserDetailScreen({ onBack }) {
             {[
               { date: "6/24（月）", type: "訪問", note: "食欲良好。エアコン設定を確認。服薬ノートを更新した。",                                                      by: "山田 CM" },
               { date: "6/17（月）", type: "電話", note: "息子（一郎氏）より連絡。週末に帰省予定との報告を受けた。",                                                   by: "山田 CM" },
-              { date: "6/10（月）", type: "訪問", note: "室温が高くポチのアラートを確認。ご本人にエアコン使用を促した。次回福祉用具相談を提案。",                    by: "山田 CM" },
+              { date: "6/10（月）", type: "訪問", note: "室温が高くモフのアラートを確認。ご本人にエアコン使用を促した。次回福祉用具相談を提案。",                    by: "山田 CM" },
               { date: "6/3（月）",  type: "訪問", note: "気分良好。昔飼っていた犬の話で会話が弾んだ。地域サロン参加を打診したところ興味を示した。",                 by: "山田 CM" },
             ].map((r, i) => (
               <div

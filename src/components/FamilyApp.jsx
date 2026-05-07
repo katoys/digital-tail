@@ -2,12 +2,22 @@ import { useState, useEffect } from "react";
 import { Settings, Mic, Bell, Heart, Clock, Power } from "lucide-react";
 import { Sparkles } from "lucide-react";
 import PawPrint from "./ui/PawPrint.jsx";
+import imgCat from "../assets/cat.png";
+import imgDog from "../assets/dog.png";
+import imgRobot from "../assets/robot.png";
 import ApplianceCard from "./ApplianceCard.jsx";
 import CareProposalCard from "./CareProposalCard.jsx";
 import { timeline, appliances, careProposals, reformProposals } from "../data/mock.jsx";
 import ReformProposalCard from "./ReformProposalCard.jsx";
 
-export default function FamilyApp() {
+const PET_IMAGES = { dog: imgDog, cat: imgCat, robot: imgRobot };
+const PET_TYPES = [
+  { id: "cat",   label: "猫",   img: imgCat   },
+  { id: "dog",   label: "犬",   img: imgDog   },
+  { id: "robot", label: "ロボ", img: imgRobot },
+];
+
+export default function FamilyApp({ petType = "dog", setPetType = () => {} }) {
   const [pressed, setPressed] = useState(false);
   const [waveActive, setWaveActive] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -45,30 +55,54 @@ export default function FamilyApp() {
       <PawPrint className="absolute top-96 left-1 w-9 h-9 text-amber-200 -rotate-6 pointer-events-none" />
 
       <header
-        className="px-5 pt-10 pb-4 flex items-center justify-between"
+        className="px-5 pt-10 pb-4"
         style={{
           background: "linear-gradient(135deg,#ff8c42 0%,#ffb347 60%,#ffd07a 100%)",
           borderRadius: "0 0 28px 28px",
           boxShadow: "0 6px 24px rgba(255,140,66,.25)",
         }}
       >
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-full bg-white/30 flex items-center justify-center text-xl">
-            🐾
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-full bg-white/30 overflow-hidden">
+              <img src={PET_IMAGES[petType]} alt="" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h1 className="text-white font-bold text-lg leading-tight">モフ・ファミリー</h1>
+              <p className="text-white/80 text-xs">{currentTime} 現在</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-white font-bold text-lg leading-tight">ポチ・ファミリー</h1>
-            <p className="text-white/80 text-xs">{currentTime} 現在</p>
+          <div className="flex items-center gap-2">
+            <button className="relative w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white">
+              <Bell size={18} />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-400 rounded-full border border-white" />
+            </button>
+            <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white">
+              <Settings size={18} />
+            </button>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button className="relative w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white">
-            <Bell size={18} />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-400 rounded-full border border-white" />
-          </button>
-          <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white">
-            <Settings size={18} />
-          </button>
+        <div className="flex justify-center gap-3">
+          {PET_TYPES.map((pt) => (
+            <button
+              key={pt.id}
+              onClick={() => setPetType(pt.id)}
+              className="flex flex-col items-center gap-0.5 transition-all"
+            >
+              <div
+                className={`w-11 h-11 rounded-full overflow-hidden transition-all ${
+                  petType === pt.id
+                    ? "ring-2 ring-white scale-110"
+                    : "opacity-60 hover:opacity-80"
+                }`}
+              >
+                <img src={pt.img} alt={pt.label} className="w-full h-full object-cover" />
+              </div>
+              <span className={`text-[10px] font-bold transition-colors ${petType === pt.id ? "text-white" : "text-white/60"}`}>
+                {pt.label}
+              </span>
+            </button>
+          ))}
         </div>
       </header>
 
@@ -89,14 +123,13 @@ export default function FamilyApp() {
                 style={{ background: "rgba(255,180,80,.3)", animationDuration: "2.5s" }}
               />
               <div
-                className="w-20 h-20 rounded-full flex items-center justify-center text-4xl relative z-10"
+                className="w-20 h-20 rounded-full overflow-hidden relative z-10"
                 style={{
-                  background: "linear-gradient(135deg,#ffedd5,#fed7aa)",
-                  boxShadow: "0 4px 16px rgba(255,140,60,.3),inset 0 2px 4px rgba(255,255,255,.6)",
+                  boxShadow: "0 4px 16px rgba(255,140,60,.3)",
                   border: "3px solid rgba(255,255,255,.8)",
                 }}
               >
-                🐶
+                <img src={PET_IMAGES[petType]} alt="" className="w-full h-full object-cover" />
               </div>
               <div
                 className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-400 rounded-full border-2 border-white z-20"
@@ -118,7 +151,7 @@ export default function FamilyApp() {
           </div>
           <div className="mt-4 space-y-1">
             <div className="flex justify-between text-xs text-orange-700/70">
-              <span>ポチの気分</span>
+              <span>モフの気分</span>
               <span className="font-semibold text-orange-500">とっても嬉しい 😊</span>
             </div>
             <div className="h-2 rounded-full bg-orange-100 overflow-hidden">
@@ -187,7 +220,7 @@ export default function FamilyApp() {
             <div className="w-5 h-5 rounded-md bg-sky-100 flex items-center justify-center">
               <Heart size={11} className="text-sky-500" />
             </div>
-            <h2 className="text-sm font-bold text-slate-700">ポチが気になっていること</h2>
+            <h2 className="text-sm font-bold text-slate-700">モフが気になっていること</h2>
             <div className="flex-1 h-px bg-slate-200/60" />
           </div>
           <p className="text-[11px] text-slate-500 px-1 mb-3">
@@ -256,7 +289,7 @@ export default function FamilyApp() {
           <div className={`w-8 h-8 rounded-full bg-white/25 flex items-center justify-center ${waveActive ? "animate-pulse" : ""}`}>
             <Mic size={18} />
           </div>
-          <span>{waveActive ? "録音中..." : "ポチを通じてメッセージを送る"}</span>
+          <span>{waveActive ? "録音中..." : "モフを通じてメッセージを送る"}</span>
         </button>
       </div>
 
