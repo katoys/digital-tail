@@ -5,6 +5,23 @@
 
 ---
 
+## 起動手順
+
+```bash
+npm install
+npm run dev
+```
+
+ブラウザで `http://localhost:5173` を開くとアプリが表示されます。
+
+| コマンド | 内容 |
+|---|---|
+| `npm run dev` | 開発サーバー起動（ホットリロード有効） |
+| `npm run build` | プロダクションビルド（`dist/` に出力） |
+| `npm run preview` | ビルド結果をローカルでプレビュー |
+
+---
+
 ## 技術スタック
 
 | 項目 | 内容 |
@@ -134,7 +151,19 @@ screen="care"    →  CareDashboard
 ## ファイル構成
 
 ```
-file.jsx   — アプリ全体（1 ファイル完結）
+src/
+├── main.jsx                         エントリーポイント
+├── App.jsx                          ルート（画面切替・ボトムナビ）
+├── index.css                        Tailwind CSS ディレクティブ
+├── components/
+│   ├── FamilyApp.jsx                家族向け画面
+│   ├── CareDashboard.jsx            ケアマネージャー向けダッシュボード
+│   ├── UserDetailScreen.jsx         利用者詳細（3タブ）
+│   ├── ApplianceCard.jsx            家電コントロールカード
+│   ├── CareProposalCard.jsx         ケア提案カード（家族・CM共用）
+│   └── ui/
+│       ├── PawPrint.jsx             肉球 SVG アイコン
+│       └── MiniBar.jsx              インライン進捗バー
+└── data/
+    └── mock.jsx                     全静的モックデータ
 ```
-
-すべてのコンポーネント・データ・スタイルが単一ファイルに収まるデモ構成です。
