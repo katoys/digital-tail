@@ -11,10 +11,11 @@ import { timeline, appliances, careProposals, reformProposals } from "../data/mo
 import ReformProposalCard from "./ReformProposalCard.jsx";
 
 const PET_IMAGES = { dog: imgDog, cat: imgCat, robot: imgRobot };
+const PET_NAMES  = { dog: "ワンダ", cat: "ミャオ", robot: "マロ" };
 const PET_TYPES = [
-  { id: "cat",   label: "猫",   img: imgCat   },
-  { id: "dog",   label: "犬",   img: imgDog   },
-  { id: "robot", label: "ロボ", img: imgRobot },
+  { id: "cat",   label: "ミャオ", img: imgCat   },
+  { id: "dog",   label: "ワンダ", img: imgDog   },
+  { id: "robot", label: "マロ",   img: imgRobot },
 ];
 
 export default function FamilyApp({ petType = "dog", setPetType = () => {} }) {
@@ -151,7 +152,7 @@ export default function FamilyApp({ petType = "dog", setPetType = () => {} }) {
           </div>
           <div className="mt-4 space-y-1">
             <div className="flex justify-between text-xs text-orange-700/70">
-              <span>モフの気分</span>
+              <span>{PET_NAMES[petType]}の気分</span>
               <span className="font-semibold text-orange-500">とっても嬉しい 😊</span>
             </div>
             <div className="h-2 rounded-full bg-orange-100 overflow-hidden">
@@ -220,7 +221,7 @@ export default function FamilyApp({ petType = "dog", setPetType = () => {} }) {
             <div className="w-5 h-5 rounded-md bg-sky-100 flex items-center justify-center">
               <Heart size={11} className="text-sky-500" />
             </div>
-            <h2 className="text-sm font-bold text-slate-700">モフが気になっていること</h2>
+            <h2 className="text-sm font-bold text-slate-700">{PET_NAMES[petType]}が気になっていること</h2>
             <div className="flex-1 h-px bg-slate-200/60" />
           </div>
           <p className="text-[11px] text-slate-500 px-1 mb-3">
@@ -289,7 +290,7 @@ export default function FamilyApp({ petType = "dog", setPetType = () => {} }) {
           <div className={`w-8 h-8 rounded-full bg-white/25 flex items-center justify-center ${waveActive ? "animate-pulse" : ""}`}>
             <Mic size={18} />
           </div>
-          <span>{waveActive ? "録音中..." : "モフを通じてメッセージを送る"}</span>
+          <span>{waveActive ? "録音中..." : `${PET_NAMES[petType]}を通じてメッセージを送る`}</span>
         </button>
       </div>
 
