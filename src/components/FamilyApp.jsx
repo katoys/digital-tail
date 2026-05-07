@@ -4,7 +4,8 @@ import { Sparkles } from "lucide-react";
 import PawPrint from "./ui/PawPrint.jsx";
 import ApplianceCard from "./ApplianceCard.jsx";
 import CareProposalCard from "./CareProposalCard.jsx";
-import { timeline, appliances, careProposals } from "../data/mock.jsx";
+import { timeline, appliances, careProposals, reformProposals } from "../data/mock.jsx";
+import ReformProposalCard from "./ReformProposalCard.jsx";
 
 export default function FamilyApp() {
   const [pressed, setPressed] = useState(false);
@@ -176,6 +177,25 @@ export default function FamilyApp() {
                   <p className="text-sm text-orange-900 font-medium leading-snug mt-0.5">{item.text}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reform proposals from conversation */}
+        <div>
+          <div className="flex items-center gap-2 mb-1 px-1">
+            <div className="w-5 h-5 rounded-md bg-sky-100 flex items-center justify-center">
+              <Heart size={11} className="text-sky-500" />
+            </div>
+            <h2 className="text-sm font-bold text-slate-700">ポチが気になっていること</h2>
+            <div className="flex-1 h-px bg-slate-200/60" />
+          </div>
+          <p className="text-[11px] text-slate-500 px-1 mb-3">
+            お話の中から、住まいについて気になることを見つけました
+          </p>
+          <div className="space-y-2.5">
+            {reformProposals.map((p) => (
+              <ReformProposalCard key={p.id} p={p} />
             ))}
           </div>
         </div>
